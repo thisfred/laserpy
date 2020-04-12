@@ -12,34 +12,34 @@ PY=python3.8
 
 .PHONY: test
 
-test: venv
-	tox
+test: venv test_extras
+	$(VENV)/tox
 
 .PHONY: test_extras
 test_extras: venv
-	pip install -e .[test]
+	$(VENV)/pip install -e .[test]
 
 .PHONY: dev_extras
 dev_extras: venv
-	pip install -e .[dev]
+	$(VENV)/pip install -e .[dev]
 
 .PHONY: test_continually
 test_continually: test_extras
-	ptw -- --testmon
+	$(VENV)/ptw -- --testmon
 
 .PHONY: precommit_update
 precommit_update: dev_extras
-	pre-commit autoupdate
+	$(VENV)/pre-commit autoupdate
 
 .PHONY: test_release
 test_release: dev_extras distclean
-	python setup.py sdist bdist_wheel 
-	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	$(VENV)/python setup.py sdist bdist_wheel 
+	$(VENV)/twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 .PHONY: release
 release: dev_extras distclean
-	python setup.py sdist bdist_wheel
-	twine upload dist/*
+	$(VENV)/python setup.py sdist bdist_wheel
+	$(VENV)/twine upload dist/*
 
 .PHONY: distclean
 distclean:
