@@ -33,7 +33,7 @@ precommit_update: dev_extras
 
 .PHONY: test_release
 test_release: dev_extras distclean
-	$(VENV)/python setup.py sdist bdist_wheel 
+	$(VENV)/python setup.py sdist bdist_wheel
 	$(VENV)/twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 .PHONY: release
